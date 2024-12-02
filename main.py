@@ -1,21 +1,19 @@
+import random
 import sys
+from random import randint
 from PyQt6 import uic
 from PyQt6.QtGui import QPainter, QColor
-from PyQt6.QtWidgets import QWidget, QApplication, QPushButton
+from PyQt6.QtWidgets import QWidget, QApplication, QPushButton, QMainWindow
 
 
-class Example(QWidget):
+class Example(QMainWindow):
     def __init__(self):
         super().__init__()
+        uic.loadUi('UI.ui')
         self.initUI()
-
-    def initUI(self):
-        self.setGeometry(300, 300, 200, 200)
         self.setWindowTitle('Рисование')
-        self.btn = QPushButton('Рисовать', self)
-        self.btn.move(70, 150)
         self.do_paint = False
-        self.btn.clicked.connect(self.paint)
+        self.pushButton.clicked.connect(self.paint)
 
     def paintEvent(self, event):
         if self.do_paint:
@@ -30,12 +28,11 @@ class Example(QWidget):
         self.update()
 
     def draw_flag(self, qp):
-        qp.setBrush(QColor(255, 0, 0))
-        qp.drawRect(30, 30, 120, 30)
-        qp.setBrush(QColor(0, 255, 0))
-        qp.drawRect(30, 60, 120, 30)
-        qp.setBrush(QColor(0, 0, 255))
-        qp.drawRect(30, 90, 120, 30)
+        qp.setBrush(QColor(255, 255, 0))
+        r = randint(20, 150)
+        x = randint(0, self.width() - r)
+        y = randint(0, self.height() - r)
+        qp.drawEllipse(QPointF(x, y), r, r)
 
 
 if __name__ == '__main__':
